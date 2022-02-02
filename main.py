@@ -9,6 +9,8 @@ import requests
 import db_manager as mng
 import config as cfg
 
+from wifi_check import loop_until_connected
+
 
 class ReqHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -135,6 +137,8 @@ class ReqHandler(BaseHTTPRequestHandler):
             self.end_headers()
 
 try:
+    loop_until_connected()
+    
     print('Starting server on %s:%i...' % cfg.SERVER_ADDRESS)
     server = HTTPServer(cfg.SERVER_ADDRESS, ReqHandler)
     print('Running server (type Ctrl+C to exit)...')
