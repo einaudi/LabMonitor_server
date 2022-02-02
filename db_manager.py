@@ -6,9 +6,14 @@ import psycopg2
 import config as cfg
 
 
-conn = psycopg2.connect(database=cfg.DB_NAME)
+conn = psycopg2.connect(
+    host=cfg.DB_HOST,
+    database=cfg.DB_NAME,
+    user=cfg.DB_USER,
+    password=cfg.DB_PSWD
+)
 cur = conn.cursor()
-print('Successfully onnected to {0} database'.format(cfg.DB_NAME))
+print('Successfully connected to {0} database'.format(cfg.DB_NAME))
 
 # FUNCTIONS
 # Table creation
@@ -81,6 +86,26 @@ def list_tables():
 
     return ret
 
+def get_db_tree():
+
+    # Get tables
+    cur.execute("""SELECT table_name FROM information_schema.tables
+       WHERE table_schema = 'public'""")
+    ret = {}
+    for table in cur.fetchall():
+        ret[table[0]] = {}
+        # Get columns
+        cur.execute("""SELECT * FROM information_schema.columns WHERE 
+        table_schema = 'public' AND
+        table_name = \'{0}\';""".format(table[0]))
+        for column in cur.fetchall():
+            # print(column)
+            ret[table[0]][column[3]] = {
+                'type' : column[7]
+            }
+
+    return ret
+
 def fetch_last(tables):
 
     for table in tables:
@@ -103,14 +128,16 @@ if __name__ == '__main__':
     print('Tables in database {0}:'.format(cfg.DB_NAME))
     print(tabs)
     fetch_last(tabs)
+    db_tree = get_db_tree()
+    print('DB tree:')
+    print(db_tree)
 
 
-    tab_name = 'main'
+    tab_name = 'test'
     col_settings = {
-        'temperature' : 'real',
-        'humidity' : 'real',
-        'pressure' : 'real'
+        'col1' : 'real',
+        'col2' : 'real'
     }
 
-    create_table(tab_name, col_settings)
+    # create_table(tab_name, col_settings)
     # add_columns(tab_name, col_settings)

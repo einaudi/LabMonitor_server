@@ -1,0 +1,34 @@
+<!DOCTYPE html><html>
+    <head>
+        <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="style/jsonview.css">
+    </head>
+
+    <script type="module" src="src/tabs.js"></script>
+    <script type="module" src="src/db_management.js"></script>
+
+    <body onload="prepareTabs(event)">
+        <!-- Tablinks -->
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'DB tree')">DB tree</button>
+            <button class="tablinks" onclick="openTab(event, 'Add table')">Add table</button>
+            <button class="tablinks" onclick="openTab(event, 'Add columns')">Add columns</button>
+            <button class="tablinks" onclick="openTab(event, 'Remove')">Remove</button>
+        </div>
+        <!-- Tab content -->
+        <!-- DB tree -->
+        <div id="DB tree" class="tabcontent">
+            <p class="dbTree"></p>
+        </div>
+        <!-- Add table -->
+        <div id="Add table" class="tabcontent">
+        </div>
+        <!-- Add columns -->
+        <div id="Add columns" class="tabcontent">
+            <h1>Add columns</h1>
+        </div>
+        <!-- Remove -->
+        <div id="Remove" class="tabcontent">
+        </div>
+    </body>
+</html>
