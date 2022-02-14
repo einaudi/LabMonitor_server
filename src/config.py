@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 # Server
-SERVER_ADDRESS = ('172.17.32.108', 7000)
+SERVER_ADDRESS = ('127.0.0.1', 7000)
 
 # Database
-DB_NAME = 'labmonitor'
+DB_NAME = 'test'
 DB_HOST = 'localhost'
-DB_USER = 'pi'
-DB_PSWD = 'cold-centre-1'
+DB_USER = 'postgres'
+DB_PSWD = 'alohomora'
 
 # Memory usage
 MU_SAVEEVERY = 15*60

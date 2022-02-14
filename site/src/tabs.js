@@ -48,6 +48,9 @@ window.openTab = function openTab(evt, tabName) {
     if (tabName == 'Remove') {
       prepareTabRemove();
     }
+    if (tabName == 'Memory usage') {
+      prepareTabMU();
+    }
   
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(tabName).style.display = "block";
@@ -146,11 +149,29 @@ window.prepareTabRemove = function prepareTabRemove() {
   });
 }
 
+window.prepareTabMU = function prepareTabMU() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "fetch_last?tab_name=memory_usage&column=memory_usage", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var data = JSON.parse(xhr.responseText)
+        var MUHTML = `
+          <p>Memory usage: ${data['value_last']} %</p>
+        `
+        document.getElementById('Memory usage').innerHTML = MUHTML;  
+      }
+  };
+  xhr.send();
+}
+
 window.prepareTabs = function prepareTabs(evt) {
   // Prepare Add table tab
   prepareTabAdd();
   // Prepare Remove tab
   prepareTabRemove();
+  // Prepare Memory usage tab
+  prepareTabMU();
 
   // Prepare and show db tree
   openTab(evt, 'DB tree');

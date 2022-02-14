@@ -38,6 +38,20 @@ class ReqHandler(BaseHTTPRequestHandler):
                 tab_name,
                 query
             )
+        
+        # Data fetching
+        elif path == "/fetch_last":
+            self.send_response(200)
+            self.send_header('Content-type','application/json')
+            self.end_headers()
+
+            value = {}
+            value['value_last'] = mng.fetch_last(
+                query['tab_name'],
+                query['column']
+            )
+            value = json.dumps(value)
+            self.wfile.write(bytes(value, 'utf-8'))
 
         # DB management
         elif path == "/get_db_tree":

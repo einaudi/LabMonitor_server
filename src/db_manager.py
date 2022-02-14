@@ -238,24 +238,24 @@ def get_db_tree():
 
     return ret
 
-def fetch_last(tables):
+def fetch_last(table, column):
 
     conn, cur = db_connect()
 
-    for table in tables:
-            cur.execute(
-                '''SELECT * FROM {0} ORDER BY id
-                '''.format(table)
-            )
-            rows = cur.fetchall()
-            if cur.rowcount:
-                print('\nTable: ', table)
-                print('Total count: ', cur.rowcount)
-                print(rows[-1])
-            else:
-                print('\nNo rows in ', table)
-
-    conn.close()
+    try:
+        cur.execute(
+            '''SELECT {0} FROM {1} ORDER BY id
+            '''.format(column, table)
+        )
+        rows = cur.fetchall()
+        if cur.rowcount:
+            return rows[-1][0]
+        else:
+            return 0
+    except Exception as e:
+        log_to_file('error occured during data fetch: {0}'.format(e))
+    finally:
+        conn.close()
 
 
 if __name__ == '__main__':
@@ -263,7 +263,8 @@ if __name__ == '__main__':
     tabs = list_tables()
     print('Tables in database {0}:'.format(cfg.DB_NAME))
     print(tabs)
-    fetch_last(tabs)
+    last = fetch_last('memory_usage', 'memory_usage')
+    print('Last memory usage:', last)
     db_tree = get_db_tree()
     print('DB tree:')
     print(db_tree)

@@ -17,6 +17,7 @@ def init_mu():
             'tab_name' : cfg.MU_TABNAME,
             'col_settings' : json.dumps({
                 'memory_free' : 'real',
+                'memory_total' : 'real',
                 'memory_usage' : 'real'
             }),
             'sensor' : 0
@@ -33,18 +34,19 @@ def get_mu():
     # Convert to GB
     free /= (2**30)
 
-    return free, usage
+    return free, total, usage
 
 def logger_mu():
 
     while True:
-        free, usage = get_mu()
+        free, total, usage = get_mu()
 
         requests.get(
             'http://{0}:{1}/data'.format(*cfg.SERVER_ADDRESS),
             params = {
                 'tab_name' : cfg.MU_TABNAME,
                 'memory_free' : free,
+                'memory_total' : total,
                 'memory_usage' : usage
             }
         )
@@ -53,6 +55,8 @@ def logger_mu():
         time.sleep(cfg.MU_SAVEEVERY)
 
 def main_mu():
+
+    time.sleep(5)
 
     init_mu()
     logger_mu()

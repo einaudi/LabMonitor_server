@@ -12,14 +12,17 @@ import src.config as cfg
 
 try:
     loop_until_connected()
-    # Memory usage thread
-    mu_thread = threading.Thread(target=main_mu)
-    mu_thread.start()
+
     # Server
     print('Starting server on %s:%i...' % cfg.SERVER_ADDRESS)
     server = HTTPServer(cfg.SERVER_ADDRESS, ReqHandler)
     print('Running server (type Ctrl+C to exit)...')
     print('\n### Logs ###\n')
+    
+    # Memory usage thread
+    mu_thread = threading.Thread(target=main_mu)
+    mu_thread.start()
+    
     server.serve_forever()
     print('End')
 except KeyboardInterrupt:
