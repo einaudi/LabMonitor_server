@@ -6,7 +6,6 @@ from http.server import BaseHTTPRequestHandler
 import json
 
 import src.db_manager as mng
-import src.config as cfg
 
 
 class ReqHandler(BaseHTTPRequestHandler):

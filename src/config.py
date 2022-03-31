@@ -10,8 +10,9 @@ DB_USER = 'postgres'
 DB_PSWD = 'alohomora'
 
 # Memory usage
-MU_SAVEEVERY = 15*60
+MU_SAVEEVERY = 15 # min
 MU_TABNAME = 'memory_usage'
 
 # Misc
 LOG_FILE = './logs/log.txt'
+THREAD_DELAY = 5  # s

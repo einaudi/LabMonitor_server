@@ -36,27 +36,30 @@ def get_mu():
 
     return free, total, usage
 
+def log_mu():
+    free, total, usage = get_mu()
+
+    requests.get(
+        'http://{0}:{1}/data'.format(*cfg.SERVER_ADDRESS),
+        params = {
+            'tab_name' : cfg.MU_TABNAME,
+            'memory_free' : free,
+            'memory_total' : total,
+            'memory_usage' : usage
+        }
+    )
+    print('Memory usage logged')
+
 def logger_mu():
 
     while True:
-        free, total, usage = get_mu()
-
-        requests.get(
-            'http://{0}:{1}/data'.format(*cfg.SERVER_ADDRESS),
-            params = {
-                'tab_name' : cfg.MU_TABNAME,
-                'memory_free' : free,
-                'memory_total' : total,
-                'memory_usage' : usage
-            }
-        )
-        print('Memory usage logged')
+        log_mu()
 
         time.sleep(cfg.MU_SAVEEVERY)
 
 def main_mu():
 
-    time.sleep(5)
+    time.sleep(cfg.THREAD_DELAY)
 
     init_mu()
     logger_mu()

@@ -115,7 +115,7 @@ def insert_data(tab_name, data):
         try:
             value = float(value)
             cmdValue += ', {0:.4e}'.format(value)
-        except TypeError:
+        except ValueError:
             cmdValue += ', \'{0}\''.format(value)
 
     cmdHead += ')\n'
