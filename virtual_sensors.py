@@ -4,7 +4,7 @@ import time
 from src.memory_usage import log_mu
 from src.outdoor import log_outdoor
 
-import config as cfg
+import src.config as cfg
 
 
 n = 0  # min count

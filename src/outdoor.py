@@ -4,7 +4,7 @@ import json
 import requests
 import time
 
-import config as cfg
+import src.config as cfg
 
 
 url = 'http://studenci.fuw.edu.pl/~pablo/luftdaten/temp.json'
